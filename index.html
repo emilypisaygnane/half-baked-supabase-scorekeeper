@@ -5,27 +5,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="icon" type="image/x-icon" href="/assets/alchemy-favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&family=Titillium+Web:wght@200;400;600&display=swap">
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/global.css" />
-    <title>Web App</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <title>Supa Scorekeeper</title>
 </head>
 
 <body>
-    <header>
-        <img src="/assets/html_css_js.png">
-        <h1>Web App</h1>
-    </header>
-
     <main>
+        <section class="main-section">
+            <div id="current-game">
+                <h2>Current Game</h2>
+                <div id="current-game-container">
 
+                </div>
+
+
+                <div class="form-and=buttons">
+                    <form id="name-form">
+                        <label>
+                            Team One Name
+                            <input name="team-one" />
+                        </label>
+                        <label>
+                            Team Two Name
+                            <input name="team-two" />
+                        </label>
+                        <button>Name Your Teams</button>
+                    </form>
+
+                    <div class="buttons">
+                        <div class="top-buttons">
+                            <div class="left-buttons">
+                                <h3 id="team-one-name">Team One</h3>
+                                <button id="team-one-add-button">
+                                    Add
+                                </button>
+                                <button id="team-one-subtract-button">
+                                    Subtract
+                                </button>
+                            </div>
+
+                            <div class="right-buttons">
+                                <h3 id="team-Two-name">Team Two</h3>
+                                <button id="team-two-add-button">
+                                    Add
+                                </button>
+                                <button id="team-two-subtract-button">
+                                    Subtract
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bottom-buttons">
+                            <button id="finish-game-button">
+                                Finish Game
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div>
+                    <h2>Past Games</h2>
+                </div>
+                <div id="past-games-container">
+
+                </div>
+            </div>
+
+
+
+            
+        </section>
     </main>
 
-    <footer>&copy;2022 Software Developer</footer>
+    <footer>&copy;2022 Emily Pisaygnane</footer>
 
     <script type="module" src="app.js"></script>
 </body>
