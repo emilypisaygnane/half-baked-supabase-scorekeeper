@@ -1,8 +1,8 @@
+import { getGames, createGame } from './fetch-utils.js';
 import { renderGame } from './render-utils.js';
-import { createGame, getGames } from './fetch-utils.js';
 
 const currentGameEl = document.getElementById('current-game-container');
-const pastGamesEl = document.getElementById('past-game-container');
+const pastGamesEl = document.getElementById('past-games-container');
 
 const nameForm = document.getElementById('name-form');
 const teamOneAddButton = document.getElementById('team-one-add-button');
@@ -13,7 +13,7 @@ const finishGameButton = document.getElementById('finish-game-button');
 const teamOneLabel = document.getElementById('team-one-name');
 const teamTwoLabel = document.getElementById('team-two-name');
 
-let currentGame = { 
+let currentGame = {
     name1: '',
     name2: '',
     score1: '',
@@ -24,11 +24,11 @@ let pastGames = [];
 
 nameForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    const formData = new FormData(nameForm);
 
-    const data = new FormData(nameForm);
-
-    const name1 = data.get ('team-one');
-    const name2 = data.get ('team-two');
+    const name1 = formData.get('team-one');
+    const name2 = formData.get('team-two');
 
     currentGame.name1 = name1;
     currentGame.name2 = name2;
@@ -61,22 +61,19 @@ teamTwoSubtractButton.addEventListener('click', () => {
     displayCurrentGameEl();
 });
 
-
 finishGameButton.addEventListener('click', async () => {
     await createGame(currentGame);
-  
+
     const games = await getGames();
 
     pastGames = games;
 
     displayAllGames();
 
-    currentGame = {
-        name1: '',
-        name2: '',
-        score1: 0,
-        score2: 0
-    };
+    currentGame.name1 = '';
+    currentGame.name2 = '';
+    currentGame.score1 = 0;
+    currentGame.score2 = 0;
 
     displayCurrentGameEl();
 });
@@ -98,6 +95,7 @@ function displayCurrentGameEl() {
     const game = renderGame(currentGame);
 
     currentGameEl.append(game);
+
 }
 
 function displayAllGames() {
@@ -107,8 +105,9 @@ function displayAllGames() {
 
     for (let game of pastGames) {
         const gameEl = renderGame(game);
-  
+
         pastGamesEl.append(gameEl);
+
     }
 }
 

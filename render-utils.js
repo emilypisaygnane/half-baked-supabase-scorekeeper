@@ -4,7 +4,7 @@ export function renderGame(game) {
     const team2Div = renderTeam(game.name2, game.score2);
 
     div.append(team1Div, team2Div);
-    
+
     div.classList.add('game');
 
     return div;
@@ -21,7 +21,7 @@ export function renderTeam(name, score) {
 
     nameDiv.textContent = name;
     scoreDiv.textContent = score;
-
+    
     teamDiv.append(nameDiv, scoreDiv);
 
     return teamDiv;
