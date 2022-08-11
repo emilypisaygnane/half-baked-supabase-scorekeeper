@@ -1,4 +1,6 @@
 import { renderGame } from './render-utils.js';
+import { createGame, getGames } from './fetch-utils.js';
+
 const currentGameEl = document.getElementById('current-game-container');
 const pastGamesEl = document.getElementById('past-game-container');
 
@@ -11,14 +13,14 @@ const finishGameButton = document.getElementById('finish-game-button');
 const teamOneLabel = document.getElementById('team-one-name');
 const teamTwoLabel = document.getElementById('team-two-name');
 
-const pastGames = [];
-
 let currentGame = { 
     name1: '',
     name2: '',
-    score1: 0,
-    score2: 0
+    score1: '',
+    score2: ''
 };
+
+let pastGames = [];
 
 nameForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -59,33 +61,13 @@ teamTwoSubtractButton.addEventListener('click', () => {
     displayCurrentGameEl();
 });
 
-function displayCurrentGameEl() {
-    currentGameEl.textContent = '';
 
-    teamOneLabel.textContent = currentGame.name1;
-    teamTwoLabel.textContent = currentGame.name2;
+finishGameButton.addEventListener('click', async () => {
+    await createGame(currentGame);
+  
+    const games = await getGames();
 
-    const gameEl = renderGame(currentGame);
-
-    gameEl.classList.add('current');
-
-    currentGameEl.append(gameEl);
-}
-
-function displayAllGames() {
-    pastGamesEl.textContent = '';
-
-    for (let game of pastGames) {
-        const gameEl = renderGame(game);
-
-        gameEl.classList.add('past');
-    
-        pastGamesEl.append(gameEl);
-    }
-}
-
-finishGameButton.addEventListener('click', () => {
-    pastGames.push(currentGame);
+    pastGames = games;
 
     displayAllGames();
 
@@ -102,9 +84,32 @@ finishGameButton.addEventListener('click', () => {
 window.addEventListener('load', async () => {
     const games = await getGames();
 
-    if (games) {
-        pastGames = games;
+    pastGames = games;
 
-        displayAllGames();
-    }
+    displayAllGames();
 });
+
+function displayCurrentGameEl() {
+    currentGameEl.textContent = '';
+
+    teamOneLabel.textContent = currentGame.name1;
+    teamTwoLabel.textContent = currentGame.name2;
+
+    const game = renderGame(currentGame);
+
+    currentGameEl.append(game);
+}
+
+function displayAllGames() {
+    pastGamesEl.textContent = '';
+
+    getGames();
+
+    for (let game of pastGames) {
+        const gameEl = renderGame(game);
+  
+        pastGamesEl.append(gameEl);
+    }
+}
+
+displayCurrentGameEl();
